@@ -504,11 +504,15 @@ static int devfreq_notifier_call(struct notifier_block *nb, unsigned long type,
 }
 
 /**
- * _remove_devfreq() - Remove devfreq from the list and release its resources.
- * @devfreq:	the devfreq struct
+ * devfreq_dev_release() - Callback for struct device to release the device.
+ * @dev:	the devfreq device
+ *
+ * Remove devfreq from the list and release its resources.
  */
-static void _remove_devfreq(struct devfreq *devfreq)
+static void devfreq_dev_release(struct device *dev)
 {
+	struct devfreq *devfreq = to_devfreq(dev);
+
 	mutex_lock(&devfreq_list_lock);
 	list_del(&devfreq->node);
 	mutex_unlock(&devfreq_list_lock);
@@ -523,19 +527,6 @@ static void _remove_devfreq(struct devfreq *devfreq)
 	mutex_destroy(&devfreq->lock);
 	mutex_destroy(&devfreq->sysfs_lock);
 	kfree(devfreq);
-}
-
-/**
- * devfreq_dev_release() - Callback for struct device to release the device.
- * @dev:	the devfreq device
- *
- * This calls _remove_devfreq() if _remove_devfreq() is not called.
- */
-static void devfreq_dev_release(struct device *dev)
-{
-	struct devfreq *devfreq = to_devfreq(dev);
-
-	_remove_devfreq(devfreq);
 }
 
 /**
