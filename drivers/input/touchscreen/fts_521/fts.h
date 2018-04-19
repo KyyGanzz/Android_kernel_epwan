@@ -53,7 +53,12 @@
 #define PINCTRL_STATE_SUSPEND		"pmx_ts_suspend"
 #define PINCTRL_STATE_RELEASE		"pmx_ts_release"
 
-#define IRQ_FLAGS IRQF_TRIGGER_LOW | IRQF_ONESHOT | IRQF_PERF_CRITICAL
+/* #define DEBUG */	/* /< define to print more logs in the kernel log
+			 * and better follow the code flow */
+#ifdef pr_fmt
+#undef pr_fmt
+#define pr_fmt(fmt) "[ FTS ] " fmt
+#endif
 
 #define DRIVER_TEST
 
@@ -215,7 +220,6 @@ struct fts_hw_platform_data {
  * Forward declaration
  */
 struct fts_ts_info;
-extern char tag[8];
 
 /*
  * Dispatch event handler
