@@ -8,7 +8,7 @@ static char new_command_line[COMMAND_LINE_SIZE];
 
 static int cmdline_proc_show(struct seq_file *m, void *v)
 {
-	seq_printf(m, "%s\n", saved_command_line);
+	seq_printf(m, "%s\n", new_command_line);
 	return 0;
 }
 
@@ -50,6 +50,14 @@ static void patch_safetynet_flags(char *cmd)
 
 static int __init proc_cmdline_init(void)
 {
+	strcpy(new_command_line, saved_command_line);
+
+	/*
+	 * Patch various flags from command line seen by userspace in order to
+	 * pass SafetyNet checks.
+	 */
+	patch_safetynet_flags(new_command_line);
+
 	proc_create("cmdline", 0, NULL, &cmdline_proc_fops);
 	return 0;
 }
