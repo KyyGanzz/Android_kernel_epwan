@@ -57,9 +57,6 @@
 		qcom,mdss-dsi-panel-blackness-level = <3230>;
 		qcom,dispparam-enabled;
 
-		qcom,mdss-panel-on-dimming-delay = <120>;
-
-		qcom,ulps-enabled;
 		qcom,suspend-ulps-enabled;
 		qcom,panel-allow-phy-poweroff;
 
