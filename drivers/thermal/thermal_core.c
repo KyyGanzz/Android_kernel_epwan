@@ -73,18 +73,16 @@ static struct thermal_governor *def_governor;
 
 static struct workqueue_struct *thermal_passive_wq;
 
-#ifdef CONFIG_DRM
-struct screen_monitor {
-	struct notifier_block thermal_notifier;
-	int screen_state; /* 1: on; 0:off */
-};
-
-struct screen_monitor sm;
-#endif
-
 static atomic_t switch_mode = ATOMIC_INIT(-1);
 static atomic_t temp_state = ATOMIC_INIT(0);
 static char boost_buf[128];
+
+/*
+ * Governor section: set of functions to handle thermal governors
+ *
+ * Functions to help in the life cycle of thermal governors within
+ * the thermal core and by the thermal governor code.
+ */
 
 static struct thermal_governor *__find_governor(const char *name)
 {
@@ -2724,7 +2722,7 @@ thermal_boost_store(struct device *dev,
 				      struct device_attribute *attr, const char *buf, size_t len)
 {
 	int ret;
-	ret = snprintf(boost_buf, sizeof(boost_buf), buf);
+	ret = snprintf(boost_buf, 128, buf);
 	return len;
 }
 
@@ -2754,7 +2752,32 @@ thermal_temp_state_store(struct device *dev,
 static DEVICE_ATTR(temp_state, 0664,
 		   thermal_temp_state_show, thermal_temp_state_store);
 
-static int create_thermal_message_node(void) {
+static ssize_t
+cpu_limits_show(struct device *dev,
+				      struct device_attribute *attr, char *buf)
+{
+	return 0;
+}
+
+static ssize_t
+cpu_limits_store(struct device *dev,
+				      struct device_attribute *attr, const char *buf, size_t len)
+{
+	unsigned int cpu, max;
+
+	if (sscanf(buf, "cpu%u %u", &cpu, &max) != 2) {
+		pr_err("input param error, can not prase param\n");
+		return -EINVAL;
+	}
+
+	return len;
+}
+
+static DEVICE_ATTR(cpu_limits, 0664,
+		   cpu_limits_show, cpu_limits_store);
+
+static int create_thermal_message_node(void)
+{
 	int ret = 0;
 
 	thermal_message_dev.class = &thermal_class;
@@ -2781,52 +2804,23 @@ static int create_thermal_message_node(void) {
 		ret = sysfs_create_file(&thermal_message_dev.kobj, &dev_attr_temp_state.attr);
 		if (ret < 0)
 			pr_warn("Thermal: create temp state node failed\n");
+
+		ret = sysfs_create_file(&thermal_message_dev.kobj, &dev_attr_cpu_limits.attr);
+		if (ret < 0)
+			pr_warn("Thermal: create cpu limits node failed\n");
 	}
 
 	return ret;
 }
 
-static void destroy_thermal_message_node(void) {
+static void destroy_thermal_message_node(void)
+{
+	sysfs_remove_file(&thermal_message_dev.kobj, &dev_attr_cpu_limits.attr);
 	sysfs_remove_file(&thermal_message_dev.kobj, &dev_attr_temp_state.attr);
-	sysfs_remove_file(&thermal_message_dev.kobj, &dev_attr_sconfig.attr);
 	sysfs_remove_file(&thermal_message_dev.kobj, &dev_attr_boost.attr);
-#ifdef CONFIG_DRM
-	sysfs_remove_file(&thermal_message_dev.kobj, &dev_attr_screen_state.attr);
-#endif
-	sysfs_remove_file(&thermal_message_dev.kobj, &dev_attr_batt_message.attr);
+	sysfs_remove_file(&thermal_message_dev.kobj, &dev_attr_sconfig.attr);
 	device_unregister(&thermal_message_dev);
 }
-
-#ifdef CONFIG_DRM
-static int screen_state_for_thermal_callback(struct notifier_block *nb, unsigned long val, void *data)
-{
-	struct drm_notify_data *evdata = data;
-	unsigned int blank;
-
-	if (val != DRM_EVENT_BLANK || !tm || !evdata || !evdata->data)
-		return 0;
-
-	blank = *(int *)(evdata->data);
-	switch (blank) {
-	case DRM_BLANK_LP1:
-		pr_warn("%s: DRM_BLANK_LP1\n", __func__);
-	case DRM_BLANK_POWERDOWN:
-		sm.screen_state = 0;
-		pr_warn("%s: DRM_BLANK_POWERDOWN\n", __func__);
-		break;
-	case DRM_BLANK_UNBLANK:
-		sm.screen_state = 1;
-		pr_warn("%s: DRM_BLANK_UNBLANK\n", __func__);
-		break;
-	default:
-		break;
-	}
-
-	sysfs_notify(&thermal_message_dev.kobj, NULL, "screen_state");
-
-	return NOTIFY_OK;
-}
-#endif
 
 static int __init thermal_init(void)
 {
@@ -2866,13 +2860,6 @@ static int __init thermal_init(void)
 	if (result)
 		pr_warn("Thermal: create thermal message node failed, return %d\n",
 			result);
-
-#ifdef CONFIG_DRM
-	sm.thermal_notifier.notifier_call = screen_state_for_thermal_callback;
-	if (drm_register_client(&sm.thermal_notifier) < 0) {
-		pr_warn("Thermal: register screen state callback failed\n");
-	}
-#endif
 
 	return 0;
 
