@@ -60,7 +60,7 @@
 			compatible = "arm,armv8";
 			reg = <0x0 0x0>;
 			enable-method = "psci";
-			efficiency = <607>;
+			efficiency = <610>;
 			clock-frequency = <1766400000>;
 			cache-size = <0x8000>;
 			dynamic-power-coefficient = <100>;
@@ -99,7 +99,7 @@
 			compatible = "arm,armv8";
 			reg = <0x0 0x100>;
 			enable-method = "psci";
-			efficiency = <607>;
+			efficiency = <610>;
 			clock-frequency = <1766400000>;
 			dynamic-power-coefficient = <100>;
 			cache-size = <0x8000>;
@@ -132,7 +132,7 @@
 			compatible = "arm,armv8";
 			reg = <0x0 0x200>;
 			enable-method = "psci";
-			efficiency = <607>;
+			efficiency = <610>;
 			clock-frequency = <1766400000>;
 			cache-size = <0x8000>;
 			cpu-release-addr = <0x0 0x90000000>;
@@ -164,7 +164,7 @@
 			compatible = "arm,armv8";
 			reg = <0x0 0x300>;
 			enable-method = "psci";
-			efficiency = <607>;
+			efficiency = <610>;
 			clock-frequency = <1766400000>;
 			dynamic-power-coefficient = <100>;
 			cache-size = <0x8000>;
