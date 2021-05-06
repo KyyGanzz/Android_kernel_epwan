@@ -2919,6 +2919,14 @@ static inline void sched_autogroup_detach(struct task_struct *p) { }
 static inline void sched_autogroup_fork(struct signal_struct *sig) { }
 static inline void sched_autogroup_exit(struct signal_struct *sig) { }
 static inline void sched_autogroup_exit_task(struct task_struct *p) { }
+
+void sched_migrate_to_cpumask_start(struct cpumask *old_mask,
+				    const struct cpumask *dest);
+void sched_migrate_to_cpumask_end(const struct cpumask *old_mask,
+				  const struct cpumask *dest);
+
+#ifndef cpu_relax_yield
+#define cpu_relax_yield() cpu_relax()
 #endif
 
 extern int yield_to(struct task_struct *p, bool preempt);
