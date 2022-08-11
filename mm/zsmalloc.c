@@ -2413,8 +2413,6 @@ unsigned long zs_compact(struct zs_pool *pool)
 
 	for (i = zs_size_classes - 1; i >= 0; i--) {
 		class = pool->size_class[i];
-		if (!class)
-			continue;
 		if (class->index != i)
 			continue;
 		pages_freed += __zs_compact(pool, class);
@@ -2459,8 +2457,6 @@ static unsigned long zs_shrinker_count(struct shrinker *shrinker,
 
 	for (i = zs_size_classes - 1; i >= 0; i--) {
 		class = pool->size_class[i];
-		if (!class)
-			continue;
 		if (class->index != i)
 			continue;
 
@@ -2629,9 +2625,6 @@ void zs_destroy_pool(struct zs_pool *pool)
 	for (i = 0; i < zs_size_classes; i++) {
 		int fg;
 		struct size_class *class = pool->size_class[i];
-
-		if (!class)
-			continue;
 
 		if (class->index != i)
 			continue;
