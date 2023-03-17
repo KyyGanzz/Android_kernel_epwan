@@ -226,7 +226,9 @@ extern int32_t nvt_clear_fw_status(void);
 extern int32_t nvt_check_fw_status(void);
 extern int32_t nvt_set_page(uint16_t i2c_addr, uint32_t addr);
 extern void nvt_stop_crc_reboot(void);
-extern int32_t nvt_get_lockdown_info(char *lockdata);
+
+extern int32_t Init_BootLoader(void);
+extern int32_t Resume_PD(void);
 
 /*******************************************************
 Description:
