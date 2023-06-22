@@ -1307,7 +1307,6 @@ struct qpnp_adc_amux_properties {
 	enum qpnp_vadc_trigger			trigger_channel;
 	enum qpnp_adc_calib_type		calib_type;
 	enum qpnp_adc_cal_val			cal_val;
-	uint32_t				cal_val;
 	struct qpnp_vadc_chan_properties	chan_prop[0];
 };
 
