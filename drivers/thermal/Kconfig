@@ -405,6 +405,11 @@ config MSM_THERMAL_SIMPLE
 	  configured at runtime. Configuration instructions can be found in the
 	  accompanying documentation.
 
+menu "Broadcom thermal drivers"
+depends on ARCH_BCM || ARCH_BCM2835 || COMPILE_TEST
+source "drivers/thermal/broadcom/Kconfig"
+endmenu
+
 menu "Texas Instruments thermal drivers"
 depends on ARCH_HAS_BANDGAP || COMPILE_TEST
 depends on HAS_IOMEM
