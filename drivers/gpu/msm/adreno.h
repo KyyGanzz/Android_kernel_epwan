@@ -257,7 +257,7 @@ struct adreno_gpudev;
 
 #define PREEMPT_SCRATCH_ADDR(dev, id) \
 	((dev)->preempt.counters.gpuaddr + (id * sizeof(u64)))
-	((dev)->preempt.scratch.gpuaddr + (id * sizeof(u64)))
+//	((dev)->preempt.scratch.gpuaddr + (id * sizeof(u64)))
 
 #define ADRENO_INT_BIT(a, _bit) (((a)->gpucore->gpudev->int_bits) ? \
 		(adreno_get_int(a, _bit) < 0 ? 0 : \
