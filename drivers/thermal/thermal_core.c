@@ -2874,7 +2874,6 @@ static int screen_state_for_thermal_callback(struct notifier_block *nb, unsigned
 		pr_warn("%s: DRM_BLANK_POWERDOWN\n", __func__);
 #ifdef CONFIG_THERMAL_SUSPEND_RESUME
 		thermal_sconfig_suspend();
-#endif
 		break;
 	case DRM_BLANK_UNBLANK:
 //		sm.screen_state = 1;
