@@ -2684,7 +2684,7 @@ static int qpnp_adc_tm_rc_check_sensor_trip(struct qpnp_adc_tm_chip *chip,
 			}
 			*sensor_low_notify_num |= (status_low & 0x1);
 			chip->sensor[i].low_thr_triggered++;
-			chip->sensor[i].tmp_low_thr_triggered++;
+			chip->sensor[i].low_thr_triggered++;
 			*cnt_low = *cnt_low + 1;
 		}
 
@@ -2717,7 +2717,7 @@ static int qpnp_adc_tm_rc_check_sensor_trip(struct qpnp_adc_tm_chip *chip,
 			}
 			*sensor_high_notify_num |= (status_high & 0x1);
 			chip->sensor[i].high_thr_triggered++;
-			chip->sensor[i].tmp_high_thr_triggered++;
+			chip->sensor[i].high_thr_triggered++;
 			*cnt_high = *cnt_high + 1;
 		}
 	}
@@ -2732,7 +2732,7 @@ static void force_enable_int_th(struct qpnp_adc_tm_chip *chip, bool is_low, bool
 
 	while (i < chip->max_channels_available) {
 		if (is_low) {
-			if (chip->sensor[i].tmp_low_thr_triggered) {
+			if (chip->sensor[i].low_thr_triggered) {
 				rc = qpnp_adc_tm_activate_trip_type(
 						&chip->sensor[i],
 						ADC_TM_TRIP_HIGH_WARM,
@@ -2745,7 +2745,7 @@ static void force_enable_int_th(struct qpnp_adc_tm_chip *chip, bool is_low, bool
 		}
 
 		if (is_high) {
-			if (chip->sensor[i].tmp_high_thr_triggered) {
+			if (chip->sensor[i].high_thr_triggered) {
 				rc = qpnp_adc_tm_activate_trip_type(
 						&chip->sensor[i],
 						ADC_TM_TRIP_LOW_COOL,
@@ -2767,10 +2767,10 @@ static void clear_tmp_low_high(struct qpnp_adc_tm_chip *chip)
 	int i = 0;
 
 	while (i < chip->max_channels_available) {
-		if (chip->sensor[i].tmp_low_thr_triggered)
-			chip->sensor[i].tmp_low_thr_triggered = 0;
-		if (chip->sensor[i].tmp_high_thr_triggered)
-			chip->sensor[i].tmp_high_thr_triggered = 0;
+		if (chip->sensor[i].low_thr_triggered)
+			chip->sensor[i].low_thr_triggered = 0;
+		if (chip->sensor[i].high_thr_triggered)
+			chip->sensor[i].high_thr_triggered = 0;
 
 		i++;
 	}
