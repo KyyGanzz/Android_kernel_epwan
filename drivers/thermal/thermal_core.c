@@ -2871,14 +2871,14 @@ static int screen_state_for_thermal_callback(struct notifier_block *nb, unsigned
 	case DRM_BLANK_LP1:
 		pr_warn("%s: DRM_BLANK_LP1\n", __func__);
 	case DRM_BLANK_POWERDOWN:
-		sm.screen_state = 0;
+//		sm.screen_state = 0;
 		pr_warn("%s: DRM_BLANK_POWERDOWN\n", __func__);
 #ifdef CONFIG_THERMAL_SUSPEND_RESUME
 		thermal_sconfig_suspend();
 #endif
 		break;
 	case DRM_BLANK_UNBLANK:
-		sm.screen_state = 1;
+//		sm.screen_state = 1;
 		pr_warn("%s: DRM_BLANK_UNBLANK\n", __func__);
 #ifdef CONFIG_THERMAL_SUSPEND_RESUME
 		thermal_sconfig_resume();
@@ -2934,12 +2934,12 @@ static int __init thermal_init(void)
 		pr_warn("Thermal: create thermal message node failed, return %d\n",
 			result);
 
-#ifdef CONFIG_DRM
+/* #ifdef CONFIG_DRM
 	sm.thermal_notifier.notifier_call = screen_state_for_thermal_callback;
 	if (drm_register_client(&sm.thermal_notifier) < 0) {
 		pr_warn("Thermal: register screen state callback failed\n");
 	}
-#endif
+#endif */
 
 	return 0;
 
@@ -2960,9 +2960,9 @@ init_exit:
 
 static void thermal_exit(void)
 {
-#ifdef CONFIG_DRM
+/* #ifdef CONFIG_DRM
 	drm_unregister_client(&sm.thermal_notifier);
-#endif
+#endif */
 	free_thermal_message();
 	unregister_pm_notifier(&thermal_pm_nb);
 	of_thermal_destroy_zones();
