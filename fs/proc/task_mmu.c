@@ -485,7 +485,7 @@ static int show_vma_header_prefix(struct seq_file *m, unsigned long start,
 
 	out[len++] = ' ';
 
-	len += num_to_str(&out[len], 20, ino, 0);
+	len += num_to_str(&out[len], 20, ino);
 
 	out[len++] = ' ';
 
@@ -572,7 +572,7 @@ show_map_vma(struct seq_file *m, struct vm_area_struct *vma, int is_pid)
 			return;
 		}
 
-		if (is_stack(vma)) {
+		if (is_stack) {
 			seq_write(m, "[stack]\n", 8);
 			return;
 		}
