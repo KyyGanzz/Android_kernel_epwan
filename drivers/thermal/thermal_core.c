@@ -2675,7 +2675,7 @@ static ssize_t
 thermal_screen_state_show(struct device *dev,
 				      struct device_attribute *attr, char *buf)
 {
-//	return snprintf(buf, PAGE_SIZE, "%d\n", sm.screen_state);
+	return snprintf(buf, PAGE_SIZE, "%d\n", sm.screen_state);
 }
 
 static DEVICE_ATTR(screen_state, 0644,
@@ -2876,7 +2876,7 @@ init_exit:
 static void thermal_exit(void)
 {
 #ifdef CONFIG_DRM
-//	drm_unregister_client(&sm.thermal_notifier);
+	drm_unregister_client(&sm.thermal_notifier);
 #endif
 	free_thermal_message();
 	unregister_pm_notifier(&thermal_pm_nb);
