@@ -222,11 +222,7 @@ static void *m_start(struct seq_file *m, loff_t *ppos)
 	if (!mm || !atomic_inc_not_zero(&mm->mm_users))
 		return NULL;
 
-	if (down_read_killable(&mm->mmap_sem)) {
-		mmput(mm);
-		return ERR_PTR(-EINTR);
-	}
-
+	down_read(&mm->mmap_sem);
 	hold_task_mempolicy(priv);
 	priv->tail_vma = get_gate_vma(mm);
 

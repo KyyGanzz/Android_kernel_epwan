@@ -300,7 +300,7 @@ struct proc_maps_private {
 #ifdef CONFIG_NUMA
 	struct mempolicy *task_mempolicy;
 #endif
-} __randomize_layout;
+};
 
 struct mm_struct *proc_mem_open(struct inode *inode, unsigned int mode);
 

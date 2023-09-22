@@ -5655,7 +5655,7 @@ unsigned long capacity_curr_of(int cpu)
  */
 unsigned long capacity_min_of(int cpu)
 {
-	if (!sched_feat(MIN_CAPACITY_CAPPING))
+//	if (!sched_feat(MIN_CAPACITY_CAPPING))
 		return 0;
 	return arch_scale_cpu_capacity(NULL, cpu) *
 	       arch_scale_min_freq_capacity(NULL, cpu)

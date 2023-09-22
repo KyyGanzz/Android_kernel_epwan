@@ -2712,6 +2712,7 @@ static inline bool cpupri_check_rt(void)
 	return false;
 }
 #endif
+
 struct sched_load {
 	unsigned long prev_load;
 	unsigned long new_task_load;
@@ -2918,9 +2919,6 @@ static inline void sched_autogroup_detach(struct task_struct *p) { }
 static inline void sched_autogroup_fork(struct signal_struct *sig) { }
 static inline void sched_autogroup_exit(struct signal_struct *sig) { }
 static inline void sched_autogroup_exit_task(struct task_struct *p) { }
-
-#ifndef cpu_relax_yield
-#define cpu_relax_yield() cpu_relax()
 #endif
 
 extern int yield_to(struct task_struct *p, bool preempt);
