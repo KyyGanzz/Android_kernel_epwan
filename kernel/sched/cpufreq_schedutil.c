@@ -340,7 +340,6 @@ static void sugov_walt_adjust(struct sugov_cpu *sg_cpu, unsigned long *util,
 			pl = mult_frac(pl, TARGET_LOAD, 100);
 		*util = (*util + pl) / 2;
 	}
-}
 
 #ifdef CONFIG_NO_HZ_COMMON
 static bool sugov_cpu_is_busy(struct sugov_cpu *sg_cpu)
