@@ -127,11 +127,3 @@ Android.bp
 #
 # igmore compile.sh
 compile.sh
-
-# ignore codelinaro script
-codelinaro.sh
-
-#
-# ignore folder out
-out
-
