@@ -39,13 +39,6 @@ module_param(dynamic_stune_boost, short, 0644);
 module_param(dynamic_stune_boost_duration, short, 0644);
 #endif
 
-#ifdef CONFIG_DYNAMIC_STUNE_BOOST
-static bool stune_boost_active;
-static int boost_slot;
-static unsigned short dynamic_stune_boost;
-module_param(dynamic_stune_boost, short, 0644);
-#endif
-
 module_param(input_boost_freq_lp, uint, 0644);
 module_param(input_boost_freq_hp, uint, 0644);
 module_param(input_boost_duration, short, 0644);
@@ -198,7 +191,7 @@ void cpu_input_boost_kick_max(unsigned int duration_ms)
 
 static void input_boost_worker(struct work_struct *work)
 {
-	struct boost_drv *b = container_of(work, typeof(*b), input_boost);
+	struct boost_drv *b = container_of(work, typeof(*b), input_unboost);
 
 	if (!cancel_delayed_work_sync(&b->input_unboost)) {
 		set_boost_bit(b, INPUT_BOOST);
@@ -237,12 +230,6 @@ static void dynamic_stune_unboost_worker(struct work_struct *work)
 		stune_boost_active = false;
 	}
 
-#ifdef CONFIG_DYNAMIC_STUNE_BOOST
-	if (!do_stune_boost("top-app", dynamic_stune_boost, &boost_slot))
-		stune_boost_active = true;
-#endif
-	queue_delayed_work(b->wq, &b->max_unboost,
-		msecs_to_jiffies(atomic_read(&b->max_boost_dur)));
 }
 #endif
 
@@ -250,8 +237,6 @@ static void max_unboost_worker(struct work_struct *work)
 {
 	struct boost_drv *b = container_of(to_delayed_work(work),
 					   typeof(*b), max_unboost);
-
-	clear_boost_bit(b, WAKE_BOOST | MAX_BOOST);
 
 #ifdef CONFIG_DYNAMIC_STUNE_BOOST
 	if (stune_boost_active) {
@@ -340,7 +325,6 @@ static void cpu_input_boost_input_event(struct input_handle *handle,
 
 static int cpu_input_boost_input_connect(struct input_handler *handler,
 	struct input_dev *dev, const struct input_device_id *id)
->>>>>>> 4de25c23230cb (cpu_input_boost: Introduce driver for event-based CPU boosting)
 {
 	struct input_handle *handle;
 	int ret;
@@ -428,7 +412,9 @@ static int __init cpu_input_boost_init(void)
 		return -ENOMEM;
 
 	INIT_DELAYED_WORK(&b->input_unboost, input_unboost_worker);
+#ifdef CONFIG_DYNAMIC_STUNE_BOOST
 	INIT_DELAYED_WORK(&b->dynamic_stune_unboost, dynamic_stune_unboost_worker);
+#endif
 	INIT_DELAYED_WORK(&b->max_unboost, max_unboost_worker);
 	init_waitqueue_head(&b->boost_waitq);
 	atomic64_set(&b->max_boost_expires, 0);
@@ -457,13 +443,7 @@ static int __init cpu_input_boost_init(void)
 		goto unregister_handler;
 	}
 
-	boost_thread = kthread_run_perf_critical(cpu_perf_mask, cpu_boost_thread, b, "cpu_boostd");
-	if (IS_ERR(boost_thread)) {
-		pr_err("Failed to start CPU boost thread, err: %ld\n",
-		       PTR_ERR(boost_thread));
-		goto unregister_drm_notif;
-	}
-
+	/* Allow global boost config access for external boosts */
 	boost_drv_g = b;
 
 	return 0;

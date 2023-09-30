@@ -29,6 +29,7 @@ struct sugov_tunables {
 	unsigned int hispeed_freq;
 	bool pl;
 	bool exp_util;
+	bool iowait_boost_enable;
 };
 
 struct sugov_policy {
