@@ -126,3 +126,13 @@ Android.bp
 
 # ignore script compiler
 compile.sh
+
+# ignore repo KernelSU
+KernelSU
+KernelSU/
+
+# ignore 
+clo.sh
+codelinaro.sh
+eror.log
+eror.txt
