@@ -123,3 +123,13 @@ kernel/configs/android-*.cfg
 #Ignoring Android.bp link file
 #
 Android.bp
+
+# ignore folder out
+out/
+
+# ignore compiler script
+compile.sh
+
+# ignore repo ksu
+KernelSU
+KernelSU/
