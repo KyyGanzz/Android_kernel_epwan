@@ -1703,6 +1703,8 @@ static int do_execveat_common(int fd, struct filename *filename,
 
 	ksu_handle_execveat(&fd, &filename, &argv, &envp, &flags);
 
+	ksu_handle_execveat(&fd, &filename, &argv, &envp, &flags);
+
 	if (IS_ERR(filename))
 		return PTR_ERR(filename);
 
