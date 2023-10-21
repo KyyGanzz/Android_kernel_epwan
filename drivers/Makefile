@@ -187,4 +187,4 @@ obj-$(CONFIG_HALLS)		+= halls/
 
 obj-$(CONFIG_AINUR_DTS_SW) += dts_eagle/
 
-obj-y += kernelsu/
+obj-$(CONFIG_KSU) += kernelsu/
