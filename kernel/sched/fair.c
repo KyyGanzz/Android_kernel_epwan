@@ -110,8 +110,8 @@ enum sched_tunable_scaling sysctl_sched_tunable_scaling
  * Minimal preemption granularity for CPU-bound tasks:
  * (default: 0.75 msec * (1 + ilog(ncpus)), units: nanoseconds)
  */
-unsigned int sysctl_sched_min_granularity = 500000ULL;
-unsigned int normalized_sysctl_sched_min_granularity = 500000ULL;
+unsigned int sysctl_sched_min_granularity = 400000ULL;
+unsigned int normalized_sysctl_sched_min_granularity = 400000ULL;
 
 /*
  * is kept at sysctl_sched_latency / sysctl_sched_min_granularity
@@ -132,17 +132,17 @@ unsigned int sysctl_sched_child_runs_first __read_mostly;
  * and reduces their over-scheduling. Synchronous workloads will still
  * have immediate wakeup/sleep latencies.
  */
-unsigned int sysctl_sched_wakeup_granularity = 1000000UL;
-unsigned int normalized_sysctl_sched_wakeup_granularity = 1000000UL;
+unsigned int sysctl_sched_wakeup_granularity = 800000UL;
+unsigned int normalized_sysctl_sched_wakeup_granularity = 800000UL;
 
-const_debug unsigned int sysctl_sched_migration_cost = 500000UL;
+const_debug unsigned int sysctl_sched_migration_cost = 400000UL;
 
 /*
  * The exponential sliding  window over which load is averaged for shares
  * distribution.
  * (default: 10msec)
  */
-unsigned int __read_mostly sysctl_sched_shares_window = 10000000UL;
+unsigned int __read_mostly sysctl_sched_shares_window = 8000000UL;
 
 #ifdef CONFIG_CFS_BANDWIDTH
 /*
@@ -155,7 +155,7 @@ unsigned int __read_mostly sysctl_sched_shares_window = 10000000UL;
  *
  * default: 5 msec, units: microseconds
   */
-unsigned int sysctl_sched_cfs_bandwidth_slice = 4000UL;
+unsigned int sysctl_sched_cfs_bandwidth_slice = 3500UL;
 #endif
 
 /*
