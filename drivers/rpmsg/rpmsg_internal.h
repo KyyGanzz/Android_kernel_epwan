@@ -79,4 +79,28 @@ int rpmsg_unregister_device(struct device *parent,
 struct device *rpmsg_find_device(struct device *parent,
 				 struct rpmsg_channel_info *chinfo);
 
+/**
+ * rpmsg_chrdev_register_device() - register chrdev device based on rpdev
+ * @rpdev:	prepared rpdev to be used for creating endpoints
+ *
+ * This function wraps rpmsg_register_device() preparing the rpdev for use as
+ * basis for the rpmsg chrdev.
+ */
+static inline int rpmsg_chrdev_register_device(struct rpmsg_device *rpdev)
+{
+	int ret;
+
+	strcpy(rpdev->id.name, "rpmsg_chrdev");
+	ret = driver_set_override(&rpdev->dev, &rpdev->driver_override,
+				  rpdev->id.name, strlen(rpdev->id.name));
+	if (ret)
+		return ret;
+
+	ret = rpmsg_register_device(rpdev);
+	if (ret)
+		kfree(rpdev->driver_override);
+
+	return ret;
+}
+
 #endif
