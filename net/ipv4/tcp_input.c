@@ -2061,7 +2061,7 @@ static bool tcp_check_sack_reneging(struct sock *sk, int *ack_flag)
 
 		inet_csk_reset_xmit_timer(sk, ICSK_TIME_RETRANS,
 					  delay, TCP_RTO_MAX);
-		*ack_flag &= ~FLAG_SET_XMIT_TIMER;
+//		*ack_flag &= FLAG_SET_XMIT_TIMER;
 		return true;
 	}
 	return false;

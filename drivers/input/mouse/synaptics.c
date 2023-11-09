@@ -1553,10 +1553,8 @@ static int __synaptics_init(struct psmouse *psmouse, bool absolute_mode)
 	return err;
 }
 
-int synaptics_init(struct psmouse *psmouse)
-{
-	return __synaptics_init(psmouse, true);
-}
+// int synaptics_init(struct psmouse *psmouse)
+//	return __synaptics_init(psmouse, true);
 
 int synaptics_init_relative(struct psmouse *psmouse)
 {
@@ -1706,21 +1704,22 @@ int synaptics_init_smbus(struct psmouse *psmouse)
 #if defined(CONFIG_MOUSE_PS2_SYNAPTICS) || \
     defined(CONFIG_MOUSE_PS2_SYNAPTICS_SMBUS)
 
-int synaptics_init(struct psmouse *psmouse)
+ int synaptics_init(struct psmouse *psmouse)
+//	struct synaptics_device_info info;
+
 {
-	struct synaptics_device_info info;
 	int error;
 	int retval;
 
 	psmouse_reset(psmouse);
 
-	error = synaptics_query_hardware(psmouse, &info);
+	error = synaptics_query_hardware(psmouse);
 	if (error) {
 		psmouse_err(psmouse, "Unable to query device: %d\n", error);
 		return error;
-	}
+		}
 
-	if (SYN_CAP_INTERTOUCH(info.ext_cap_0c)) {
+//	if (SYN_CAP_INTERTOUCH(info.ext_cap_0c)) {
 		if ((!IS_ENABLED(CONFIG_RMI4_SMB) ||
 		     !IS_ENABLED(CONFIG_MOUSE_PS2_SYNAPTICS_SMBUS)) &&
 		    /* Forcepads need F21, which is not ready */
@@ -1730,18 +1729,18 @@ int synaptics_init(struct psmouse *psmouse)
 				     "Make sure MOUSE_PS2_SYNAPTICS_SMBUS and RMI4_SMB are enabled to get a better touchpad experience.\n");
 		}
 
-		error = synaptics_setup_intertouch(psmouse, &info, true);
+//		error = synaptics_setup_intertouch(psmouse, *info, true);
 		if (!error)
-			return PSMOUSE_SYNAPTICS_SMBUS;
-	}
+			return PSMOUSE_SYNAPTICS;
 
-	retval = synaptics_setup_ps2(psmouse, &info);
+//	retval = synaptics_setup_ps2(psmouse, &info);
+
 	if (retval < 0) {
 		/*
 		 * Not using any flavor of Synaptics support, so clean up
 		 * SMbus breadcrumbs, if any.
 		 */
-		psmouse_smbus_cleanup(psmouse);
+//		psmouse_smbus_cleanup(psmouse);
 	}
 
 	return retval;

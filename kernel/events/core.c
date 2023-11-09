@@ -11033,7 +11033,7 @@ static int inherit_group(struct perf_event *parent_event,
 			return PTR_ERR(child_ctr);
 	}
 	if (leader)
-		leader->group_generation = parent_event->group_generation;
+//		leader->group_generation = parent_event->group_generation;
 	return 0;
 }
 
