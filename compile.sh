@@ -8,13 +8,12 @@ yellow='\033[0;33m'
 red='\033[0;31m'
 nocol='\033[0m'
 
-curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
+curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
 
 # Cleanup
 rm -rf out/outputs/*
 
-./compile-beryllium.sh
-./compile-dipper.sh
+sudo bash kurumi.sh
 
 BUILD_END=$(date +"%s")
 DIFF=$(($BUILD_END - $BUILD_START))
