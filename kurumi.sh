@@ -9,7 +9,7 @@ SUBARCH="arm64"
 DEFCONFIG=beryllium_defconfig
 COMPILER=clang
 LINKER=""
-COMPILERDIR="/workspace/ehhe/gengkapak"
+COMPILERDIR="/workspace/ehhe/weebx"
 
 # Outputs
 mkdir out/outputs
@@ -59,7 +59,7 @@ OBJCOPY=llvm-objcopy \
 OBJDUMP=llvm-objdump \
 STRIP=llvm-strip \
 ld-name=${LINKER} \
-KBUILD_COMPILER_STRING="GengKapak Clang"
+KBUILD_COMPILER_STRING="Weebx Clang"
 }
 
 # Make defconfig
