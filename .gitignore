@@ -135,7 +135,7 @@ firmware/novatek_nt36672_e10_hw02.fw.ihex
 arch/arm64/boot/dts/qcom/sdm845-xiaomi-common.dtsi
 arch/arm64/boot/dts/qcom/perseus-p0.dtsi
 
-# ksu
+# Ignore Repo
 KernelSU/
 KernelSU
 
