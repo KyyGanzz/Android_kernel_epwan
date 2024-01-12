@@ -141,25 +141,6 @@ static struct i2c_adapter *i2c_mux_pinctrl_root_adapter(
 	return root;
 }
 
-static struct i2c_adapter *i2c_mux_pinctrl_parent_adapter(struct device *dev)
-{
-	struct device_node *np = dev->of_node;
-	struct device_node *parent_np;
-	struct i2c_adapter *parent;
-
-	parent_np = of_parse_phandle(np, "i2c-parent", 0);
-	if (!parent_np) {
-		dev_err(dev, "Cannot parse i2c-parent\n");
-		return ERR_PTR(-ENODEV);
-	}
-	parent = of_get_i2c_adapter_by_node(parent_np);
-	of_node_put(parent_np);
-	if (!parent)
-		return ERR_PTR(-EPROBE_DEFER);
-
-	return parent;
-}
-
 static int i2c_mux_pinctrl_probe(struct platform_device *pdev)
 {
 	struct i2c_mux_core *muxc;
