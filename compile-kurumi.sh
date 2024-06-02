@@ -10,9 +10,9 @@ DEFCONFIG=lethal_defconfig
 CLANG="Proton Clang"
 COMPILER=clang
 LINKER=""
-COMPILERDIR="/workspace/Arisuu-Kernel-NO-KSU/proton-clang"
-export KBUILD_BUILD_USER=Rapli
-export KBUILD_BUILD_HOST=PotatoServer
+COMPILERDIR="/workspace/ehhe/proton"
+export KBUILD_BUILD_USER=NekoTuru
+export KBUILD_BUILD_HOST=Weeaboo
 
 # Header
 cyan="\033[96m"
