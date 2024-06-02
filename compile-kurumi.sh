@@ -6,7 +6,7 @@
 PHONE="beryllium"
 ARCH="arm64"
 SUBARCH="arm64"
-DEFCONFIG=lethal_defconfig
+DEFCONFIG=kurumi_defconfig
 CLANG="Proton Clang"
 COMPILER=clang
 LINKER=""
