@@ -3,14 +3,14 @@
 # Copyright (c) RapliVx Aka Rafi Aditya
 
 # Setup
-PHONE="beryllium"
+PHONE="Beryllium"
 ARCH="arm64"
 SUBARCH="arm64"
 DEFCONFIG=kurumi_defconfig
-CLANG="Proton Clang"
+CLANG="Azure Clang"
 COMPILER=clang
 LINKER=""
-COMPILERDIR="/workspace/ehhe/proton"
+COMPILERDIR="/workspace/ehhe/azure"
 export KBUILD_BUILD_USER=NekoTuru
 export KBUILD_BUILD_HOST=Weeaboo
 
