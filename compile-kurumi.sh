@@ -1,8 +1,10 @@
 #!/bin/sh
 # Compile script for Nakano kernel
 # Copyright (c) RapliVx Aka Rafi Aditya
+sudo apt update && sudo -H apt-get install bc python2 ccache binutils-aarch64-linux-gnu cpio
 
 # Setup
+CCACHE=$(command -v ccache)
 PHONE="Beryllium"
 ARCH="arm64"
 SUBARCH="arm64"
