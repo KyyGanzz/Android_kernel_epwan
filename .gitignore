@@ -137,3 +137,5 @@ arch/arm64/boot/dts/qcom/perseus-p0.dtsi
 
 # anykernel
 AK3/
+AK3-SE/
+AK3-NSE/
