@@ -2,9 +2,10 @@
 
 # Copy Image/dtbo/dtb to AnyKernel3
 KERNEL_DIR="$PWD"
-KERNEL_NSE="$KERNEL_DIR/out/outputs/Beryllium/OLD-DRIVER-NSE/Image.gz-dtb"
-KERNEL_SE="$KERNEL_DIR/out/outputs/Beryllium/OLD-DRIVER-SE/Image.gz-dtb"
-AK3_DIR="$KERNEL_DIR/AK3"
+KERNEL_NSE="$KERNEL_DIR/out/outputs/Beryllium/NEW-DRIVER-NSE/Image.gz-dtb"
+KERNEL_SE="$KERNEL_DIR/out/outputs/Beryllium/NEW-DRIVER-SE/Image.gz-dtb"
+AK3_DIR="$KERNEL_DIR/AK3-SE"
+DRIVERS="New_Drivers"
 PHONE="Beryllium"
 
         echo "* Copy Image.gz-dtb to AnyKernel3 directory"
@@ -32,7 +33,7 @@ echo "#### Create ZIP ####"
 echo "####################"
 echo ""
 cd "$AK3_DIR" || exit
-ZIP_NAME=Kurumi_"$PHONE"_"$(date +'%d%m%Y')"_"$(date +'%H%M')".zip
+ZIP_NAME=Kurumi_"$PHONE"_"$DRIVERS"_"$(date +'%d%m%Y')"_"$(date +'%H%M')".zip
 zip -r9 "$ZIP_NAME" ./*
 
 # Upload
