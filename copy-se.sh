@@ -5,7 +5,7 @@ KERNEL_DIR="$PWD"
 KERNEL_NSE="$KERNEL_DIR/out/outputs/Beryllium/NEW-DRIVER-NSE/Image.gz-dtb"
 KERNEL_SE="$KERNEL_DIR/out/outputs/Beryllium/NEW-DRIVER-SE/Image.gz-dtb"
 AK3_DIR="$KERNEL_DIR/AK3-SE"
-DRIVERS="New_Drivers"
+DRIVERS="New-Drivers"
 PHONE="Beryllium"
 
         echo "* Copy Image.gz-dtb to AnyKernel3 directory"
