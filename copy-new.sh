@@ -4,7 +4,7 @@
 KERNEL_DIR="$PWD"
 KERNEL_NSE="$KERNEL_DIR/out/outputs/Beryllium/NEW-DRIVER-NSE/Image.gz-dtb"
 KERNEL_SE="$KERNEL_DIR/out/outputs/Beryllium/NEW-DRIVER-SE/Image.gz-dtb"
-AK3_DIR="$KERNEL_DIR/AK3-SE"
+AK3_DIR="$KERNEL_DIR/AK3-NEW"
 DRIVERS="New-Drivers"
 PHONE="Beryllium"
 

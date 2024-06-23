@@ -139,3 +139,5 @@ arch/arm64/boot/dts/qcom/perseus-p0.dtsi
 AK3/
 AK3-SE/
 AK3-NSE/
+AK3-OLD/
+AK3-NEW/
