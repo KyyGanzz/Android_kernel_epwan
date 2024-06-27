@@ -43,4 +43,5 @@ echo -e " It's Time To Brick "
 echo -e "####################"
 echo -e ""
 sleep 0.5
-curl --progress-bar -T "$ZIP_NAME" https://pixeldrain.com/api/file/ | cat || exit
+curl -T "$ZIP_NAME" https://oshi.at/"$ZIP_NAME"/240
+
