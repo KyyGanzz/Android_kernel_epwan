@@ -9,10 +9,10 @@ PHONE="Beryllium"
 ARCH="arm64"
 SUBARCH="arm64"
 DEFCONFIG=kurumi_defconfig
-CLANG="Azure Clang"
+CLANG="WeebX Clang"
 COMPILER=clang
 LINKER=""
-COMPILERDIR="/workspace/ehhe/azure"
+COMPILERDIR="/workspace/ehhe/weebx"
 export KBUILD_BUILD_USER=NekoTuru
 export KBUILD_BUILD_HOST=Weeaboo
 
