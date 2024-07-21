@@ -136,6 +136,7 @@ config CPU_FREQ_DEFAULT_GOV_BLU_SCHEDUTIL
 	select CPU_FREQ_GOV_PERFORMANCE
 	help
 	  Use the 'blu_schedutil' CPUFreq governor by default. If unsure,
+
 config CPU_FREQ_DEFAULT_GOV_WALT
 	bool "walt"
 	depends on SMP
@@ -145,15 +146,6 @@ config CPU_FREQ_DEFAULT_GOV_WALT
 	  Use the 'game' CPUFreq governor by default. If unsure,
 	  have a look at the help section of that governor. The fallback
 	  governor will be 'performance'.
-
-config CPU_FREQ_DEFAULT_GOV_ZZMOOVE
-	bool "zzmoove"
-	select CPU_FREQ_GOV_ZZMOOVE
-	select CPU_FREQ_GOV_PERFORMANCE
-	help
-	  Use the CPUFreq governor 'zzmoove' as default, using predefined
-	  frequency lookup tables and optimized scaling triggers instead of
-	  % frequency steps to get smooth up/downscaling dependant on CPU load.
 
 endchoice
 
@@ -304,16 +296,6 @@ config CPU_FREQ_GOV_WALT
 	  be called cpufreq_blu_schedutil.
 
 	  If in doubt, say N.
-
-config CPU_FREQ_GOV_ZZMOOVE
-	tristate "'zzmoove' cpufreq governor"
-	depends on CPU_FREQ
-	help
-	  'zzmoove' - based on cpufreq_conservative, using predefined
-	  frequency lookup tables and optimized scaling triggers instead of
-	  % frequency steps to get smooth up/downscaling dependant on CPU load.
-
-	  if in doubt, say N.
 
 config CPU_INPUT_BOOST
 	bool "CPU Input Boost"
