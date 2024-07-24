@@ -345,7 +345,7 @@ static struct clk_branch gpu_cc_acd_cxo_clk = {
 	.clkr = {
 		.enable_reg = 0x1164,
 		.enable_mask = BIT(0),
-		.hw.init = &(struct clk_innit_data){
+		.hw.init = &(struct clk_init_data){
 			.name = "gpu_cc_acd_cxo_clk",
 			.ops = &clk_branch2_ops,
 		},
