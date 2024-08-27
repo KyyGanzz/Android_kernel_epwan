@@ -1,7 +1,10 @@
 #!/bin/sh
 # Compile script for Nakano kernel
 # Copyright (c) RapliVx Aka Rafi Aditya
-sudo apt update && sudo -H apt-get install bc python2 ccache binutils-aarch64-linux-gnu cpio
+sudo apt install -y \
+    bc \
+    python2 \
+    ccache
 
 # Setup
 CCACHE=$(command -v ccache)
