@@ -1827,7 +1827,8 @@ static int do_execveat_common(int fd, struct filename *filename,
 		if (unlikely(!strcmp(filename->name, ZYGOTE32_BIN)))
 			zygote32_task = current;
 		else if (unlikely(!strcmp(filename->name, ZYGOTE64_BIN)))
-			zygote64_task = current;
+
+			zygote64_sig = current->signal;
 		else if (unlikely(!strncmp(filename->name,
 					   HWCOMPOSER_BIN_PREFIX,
 					   strlen(HWCOMPOSER_BIN_PREFIX)))) {
