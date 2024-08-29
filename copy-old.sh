@@ -43,5 +43,5 @@ echo -e " It's Time To Brick "
 echo -e "####################"
 echo -e ""
 sleep 0.5
-curl -T "$ZIP_NAME" https://oshi.at/"$ZIP_NAME"/240
+curl -T "$ZIP_NAME" https://oshi.at/"$ZIP_NAME"/1440
 
