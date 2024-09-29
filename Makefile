@@ -538,27 +538,6 @@ ifneq ($(filter install,$(MAKECMDGOALS)),)
 endif
 
 ifeq ($(cc-name),clang)
-ifdef CONFIG_POLLY_CLANG
-KBUILD_CFLAGS	+= -mllvm -polly \
-		   -mllvm -polly-ast-use-context \
-		   -mllvm -polly-invariant-load-hoisting \
-		   -mllvm -polly-run-inliner \
-		   -mllvm -polly-vectorizer=stripmine
-ifeq ($(shell test $(CONFIG_CLANG_VERSION) -gt 130000; echo $$?),0)
-KBUILD_CFLAGS	+= -mllvm -polly-loopfusion-greedy=1 \
-		   -mllvm -polly-reschedule=1 \
-		   -mllvm -polly-postopts=1
-else
-KBUILD_CFLAGS	+= -mllvm -polly-opt-fusion=max
-endif
-# Polly may optimise loops with dead paths beyound what the linker
-# can understand. This may negate the effect of the linker's DCE
-# so we tell Polly to perfom proven DCE on the loops it optimises
-# in order to preserve the overall effect of the linker's DCE.
-ifdef CONFIG_LD_DEAD_CODE_DATA_ELIMINATION
-KBUILD_CFLAGS	+= -mllvm -polly-run-dce
-endif
-endif
 ifneq ($(CROSS_COMPILE),)
 CLANG_TRIPLE	?= $(CROSS_COMPILE)
 CLANG_FLAGS	+= --target=$(notdir $(CLANG_TRIPLE:%-=%))
@@ -831,6 +810,17 @@ KBUILD_AFLAGS	+= $(call cc-option,-mabi=lp64)
 # Some toolchains enable those fixes automatically, so opt-out.
 KBUILD_CFLAGS	+= $(call cc-option, -mno-fix-cortex-a53-835769)
 KBUILD_CFLAGS	+= $(call cc-option, -mno-fix-cortex-a53-843419)
+
+ifdef CONFIG_LLVM_POLLY
+KBUILD_CFLAGS	+= -mllvm -polly \
+		   -mllvm -polly-run-inliner \
+		   -mllvm -polly-ast-use-context \
+		   -mllvm -polly-detect-keep-going \
+           -mllvm -polly-position=before-vectorizer \
+		   -mllvm -polly-vectorizer=stripmine \
+           -mllvm -polly-detect-profitability-min-per-loop-insts=40 \
+		   -mllvm -polly-invariant-load-hoisting
+endif
 
 ifdef CONFIG_CC_WERROR
 KBUILD_CFLAGS	+= -Werror
